@@ -1,7 +1,8 @@
 # Created by: Eugene Kim <astralblue@users.noreply.github.com>
 
 PORTNAME=	ipaddr
-DISTVERSION=	1.0.0
+PORTVERSION=	1.0.0
+DISTVERSION=	v${PORTVERSION}
 CATEGORIES=	net
 
 MAINTAINER=	astralblue@users.noreply.github.com
