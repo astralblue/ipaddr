@@ -2,7 +2,7 @@
 
 PORTNAME=	ipaddr
 PORTVERSION=	1.0.0
-DISTVERSION=	v${PORTVERSION}
+DISTVERSIONPREFIX=	v
 CATEGORIES=	net
 
 MAINTAINER=	astralblue@users.noreply.github.com

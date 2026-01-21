@@ -1,3 +1,6 @@
+!/freebsd/Makefile
+/freebsd/work/
+
 # --- BEGIN https://raw.githubusercontent.com/github/gitignore/a19adfd688e3adb9112306f47d07df566d3e0a9f/Global/JetBrains.gitignore ---
 # Covers JetBrains IDEs: IntelliJ, GoLand, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
