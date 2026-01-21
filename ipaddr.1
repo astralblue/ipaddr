@@ -1,0 +1,206 @@
+.TH IPADDR 1 "January 2025" "ipaddr 1.0.0" "User Commands"
+.SH NAME
+ipaddr \- command-line IP address manipulation tool
+.SH SYNOPSIS
+.B ipaddr
+[\fB\-M\fR]
+.I ADDRESS
+[\fICOMMAND\fR [\fIARGS...\fR]] ...
+.SH DESCRIPTION
+.B ipaddr
+is a command-line tool for manipulating and querying IP addresses and
+networks. It provides functionality similar to Python's ipaddress module
+but as a standalone CLI utility.
+.PP
+Commands can be chained; chainable commands update the current address
+for use by subsequent commands.
+.SH OPTIONS
+.TP
+.B \-M
+Output prefix as netmask (e.g., /255.255.255.0 instead of /24).
+.TP
+.B \-h
+Display help message and exit.
+.SH COMMANDS
+.SS "Basic Commands"
+.TP
+.B (none)
+Print normalized address.
+.TP
+.B version
+Print IP version (4 or 6).
+.TP
+.B packed
+Print address as hexadecimal bytes (no separators).
+.TP
+.B to\-int
+Print address as decimal integer.
+.SS "Prefix/Mask Commands"
+.TP
+.BR prefix\-length ", " prefixlen
+Print prefix length.
+.TP
+.B netmask
+Print network mask.
+.TP
+.B hostmask
+Print host mask (inverse of netmask).
+.TP
+.B address
+Print address without prefix.
+.SS "Network Commands"
+.TP
+.B network
+Print network address with prefix.
+.TP
+.B broadcast
+Print broadcast address. Requires address with prefix.
+.TP
+.B num\-addresses
+Print number of addresses in network.
+.TP
+.BI "host " INDEX
+Print host at index (negative indices count from end).
+.TP
+.B host\-index
+Print index of address within its network.
+.TP
+.BI "subnet " "PLEN INDEX"
+Print subnet. PLEN is prefix length (or +N for relative).
+INDEX may be negative to count from end.
+.TP
+.BI "super " PLEN
+Print supernet. PLEN is prefix length (or \-N for relative).
+.SS "Classification Commands"
+Each returns exit code 0 if true, 1 if false.
+.TP
+.B is\-loopback
+Check if address is loopback.
+.TP
+.B is\-private
+Check if address is private (RFC 1918 for IPv4, ULA for IPv6).
+.TP
+.B is\-global
+Check if address is global unicast.
+.TP
+.B is\-multicast
+Check if address is multicast.
+.TP
+.B is\-link\-local
+Check if address is link-local.
+.TP
+.B is\-unspecified
+Check if address is unspecified (0.0.0.0 or ::).
+.TP
+.B is\-reserved
+Check if address is reserved.
+.SS "IPv6-Specific Commands"
+.TP
+.B zone\-id
+Print IPv6 zone ID (interface name or number).
+.TP
+.B scope\-id
+Print IPv6 numeric scope ID.
+.TP
+.B ipv4
+Extract IPv4 address from IPv6 (mapped, compatible) or pass through.
+.TP
+.B 6to4
+Extract IPv4 address from 6to4 address.
+.TP
+.BI "teredo " "server|client"
+Extract Teredo server or client IPv4 address.
+.SS "Comparison Commands"
+Each takes an ADDRESS argument and returns exit code 0 if true, 1 if false.
+.TP
+.BI "in " ADDR
+Check if current network is contained in ADDR.
+.TP
+.BI "contains " ADDR
+Check if current network contains ADDR.
+.TP
+.BI "overlaps " ADDR
+Check if current network overlaps with ADDR.
+.TP
+.BI "eq " ADDR
+Check if equal to ADDR.
+.TP
+.BI "ne " ADDR
+Check if not equal to ADDR.
+.TP
+.BI "lt " ADDR
+Check if less than ADDR.
+.TP
+.BI "le " ADDR
+Check if less than or equal to ADDR.
+.TP
+.BI "gt " ADDR
+Check if greater than ADDR.
+.TP
+.BI "ge " ADDR
+Check if greater than or equal to ADDR.
+.SH EXIT STATUS
+.TP
+.B 0
+Success, or boolean true for is-* and comparison commands.
+.TP
+.B 1
+Boolean false for is-* and comparison commands.
+.TP
+.B 2
+Usage error or invalid input.
+.SH EXAMPLES
+Normalize an IP address:
+.RS
+.nf
+$ ipaddr 192.168.001.001
+192.168.1.1
+.fi
+.RE
+.PP
+Get network address:
+.RS
+.nf
+$ ipaddr 192.168.1.30/28 network
+192.168.1.16/28
+.fi
+.RE
+.PP
+Chain commands to find a specific host in a subnet:
+.RS
+.nf
+$ ipaddr 192.168.0.0/16 subnet 24 5 host 100
+192.168.5.100
+.fi
+.RE
+.PP
+Check if an address is private:
+.RS
+.nf
+$ ipaddr 10.0.0.1 is-private && echo "Private" || echo "Not private"
+Private
+.fi
+.RE
+.PP
+Convert to decimal integer:
+.RS
+.nf
+$ ipaddr 192.168.1.1 to-int
+3232235777
+.fi
+.RE
+.PP
+Output with netmask notation:
+.RS
+.nf
+$ ipaddr -M 192.168.1.0/24
+192.168.1.0/255.255.255.0
+.fi
+.RE
+.SH SEE ALSO
+.BR ipcalc (1),
+.BR sipcalc (1)
+.SH AUTHOR
+Eugene Kim
+.SH COPYRIGHT
+Copyright \(co 2025 Eugene Kim. License: MIT.

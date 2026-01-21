@@ -23,6 +23,11 @@ set(IPADDR_SOURCES
 
 add_executable(ipaddr ${IPADDR_SOURCES})
 
+# Install rules
+include(GNUInstallDirs)
+install(TARGETS ipaddr DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(FILES ipaddr.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
+
 # Enable testing
 enable_testing()
 add_test(NAME test_suite COMMAND ${CMAKE_SOURCE_DIR}/tests/test.sh)
