@@ -12,6 +12,9 @@ WWW=		https://github.com/astralblue/ipaddr
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
+ONLY_FOR_ARCHS=		aarch64 amd64 powerpc64 powerpc64le riscv64
+ONLY_FOR_ARCHS_REASON=	requires compiler support for __uint128_t (64-bit only)
+
 USES=		cmake
 
 USE_GITHUB=	yes

@@ -15,8 +15,11 @@
 
 /*
  * 128-bit unsigned integer type for IPv6 address arithmetic.
- * Supported by both GCC and Clang on 64-bit platforms.
+ * Requires compiler support for __uint128_t (GCC/Clang on 64-bit platforms).
  */
+#ifndef __SIZEOF_INT128__
+#error "This platform does not support __uint128_t.  A 64-bit compiler is required."
+#endif
 typedef __uint128_t uint128_t;
 typedef __int128_t  int128_t;
 
